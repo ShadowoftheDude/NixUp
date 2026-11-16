@@ -12,7 +12,7 @@
       let
         pkgs = import inputs.nixpkgs { system = "x86_64-linux"; };
         name = "nixup";
-        nixup = pkgs.writers.writeFishBin "nixup" ./up.nix;
+        nixup = pkgs.writers.writeFishBin "nixup" ./up.fish;
         deps = with pkgs; [ gh ];
       in
       pkgs.symlinkJoin {
