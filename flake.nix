@@ -5,10 +5,23 @@
   };
 
   outputs = inputs: {
-    packages = builtins.mapAttrs (system: pkgs: {
-      hello = pkgs.hello;
-      default = inputs.self.packages.${system}.hello;
-    }) inputs.nixpkgs.legacyPackages;
+
+    defaultPackage.x86_64-linux = inputs.self.packages.x86_64-linux.nixup;
+
+    packages.x86_64-linux.nixup =
+      let
+        pkgs = import inputs.nixpkgs { system = "x86_64-linux"; };
+        name = "nixup";
+        nixup = pkgs.writers.writeFishBin "nixup" ./up.nix;
+        deps = with pkgs; [ gh ];
+      in
+      pkgs.symlinkJoin {
+        inherit name;
+        paths = [ nixup ] ++ deps;
+        buildInputs = [ pkgs.makeWrapper ];
+        postBuild = "wrapProgram $out/bin/${name} --prefix PATH : $out/bin";
+      };
+
   };
 
 }
