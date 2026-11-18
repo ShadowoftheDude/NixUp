@@ -17,23 +17,11 @@
         "aarch64-darwin"
       ];
       imports = [ ./up.nix ];
-      perSystem = { system, ... }: {
-        packages.default =
-          let
-            pkgs = import inputs.nixpkgs { inherit system; };
-            name = "nixup";
-            nixup = pkgs.writers.writeFishBin "nixup" ./up.fish;
-            deps = with pkgs; [
-              gh
-              fish
-            ];
-          in
-          pkgs.symlinkJoin {
-            inherit name;
-            paths = [ nixup ] ++ deps;
-            buildInputs = [ pkgs.makeWrapper ];
-            postBuild = "wrapProgram $out/bin/${name} --prefix PATH : $out/bin";
-          };
+      perSystem = { pkgs, config, ... }: {
+        packages = {
+          nixup = pkgs.callPackage ./up.nix { };
+          default = config.packages.nixup;
+        };
       };
     };
 
