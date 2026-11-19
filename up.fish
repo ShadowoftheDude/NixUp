@@ -1,11 +1,11 @@
 
 function input
-    read -p '' -c $argv[1] $argv[2]
+    read -p '' -c $argv[1] $argv[2] || exit 1
 end
 
-gh auth status | string match -i 'logged in' | set loggedin
+set test (gh auth status 2>&1)
 
-if $loggedin
+if $test
     gh auth login
 end
 
