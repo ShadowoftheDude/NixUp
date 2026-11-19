@@ -14,8 +14,9 @@
         name = "nixup";
         nixup = pkgs.writers.writeFishBin "nixup" ./up.fish;
         deps = with pkgs; [
-          gh
           fish
+          git
+          gh
         ];
       in
       pkgs.symlinkJoin {
