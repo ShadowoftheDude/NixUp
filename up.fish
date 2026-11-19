@@ -1,9 +1,13 @@
 
 function input
-    read -p '' -c argv[1] argv[2]
+    read -p '' -c $argv[1] $argv[2]
 end
 
-gh auth login
+gh auth status | string match -i 'logged in' | set loggedin
+
+if $loggedin
+    gh auth login
+end
 
 input 'Repository: ' repo
 
