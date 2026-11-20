@@ -21,4 +21,7 @@ input "Relative Path: " rela
 
 cp /etc/nixos/hardware-configuration.nix "$path"/"$rela"/_hw.nix
 
-nixos-rebuild switch --flake "$path#$host" --experimental-features 'nix-command flakes'
+begin
+    set -lx NIX_CONFIG "experimental-features = nix-command flakes"
+    sudo nixos-rebuild switch --flake "$path#$host"
+end
