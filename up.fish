@@ -1,6 +1,6 @@
 
 function input
-    read -g -p '' -c $argv[1] $argv[2] || exit 1
+    read -g -P $argv[1] $argv[2] || exit 1
 end
 
 if ! gh auth status &>/dev/null
@@ -11,9 +11,9 @@ input "Repository: " repo
 
 input "Target Path: " path
 
-echo $repo $path
+#echo $repo $path
 
-#gh repo clone $repo $path
+gh repo clone $repo $path
 
 input "Host Name: " host
 
