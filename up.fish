@@ -11,9 +11,9 @@ input "Repository: " repo
 
 input "Target Path: " path
 
-#echo $repo $path
+echo $repo $path
 
-gh repo clone $repo $path
+#gh repo clone $repo $path
 
 input "Host Name: " host
 
